@@ -13,7 +13,36 @@
 <script>
   window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  const recognition = new SpeechRecognition();
+  recognition.interimResults = true;
+  recognition.lang = 'pt-br';
 
+  const words = document.querySelector(".words");
+
+  recognition.addEventListener("result", e =>{
+    const transcript = Array.from(e.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join("");
+
+  //IsFinal isn't working, i think the reason is cause my microphone === trash
+  if(transcript.split(" ").filter(word => word != "").length == 1){
+    p = document.createElement("p");
+    words.appendChild(p);
+  }
+
+
+    p.textContent = transcript;
+
+      // if(e.results[0].isFinal) {
+      //   p = document.createElement("p");
+      //   words.appendChild(p);
+      // }
+  });
+
+  // recognition.addEventListener("end", recognition.start);
+
+  recognition.start();
 </script>
 
 

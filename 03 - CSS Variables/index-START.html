@@ -22,7 +22,21 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
+    :root{
+      --base: #ffc600;
+      --spacing: 10px;
+      --blur: 10px;
+    }
 
+    img{
+      padding: var(--spacing);
+      background-color: var(--base);
+      filter: blur(var(--blur));
+    }
+
+    .hl{
+      color: var(--base);
+    }
     /*
       misc styles, nothing to do with CSS variables
     */
@@ -43,9 +57,22 @@
     input {
       width: 100px;
     }
+
+
   </style>
 
   <script>
+    let img = document.querySelector("img");
+    let elements = document.querySelectorAll("#spacing, #blur, #base");
+
+    elements.forEach(element => element.addEventListener("change", handleUpdate));
+    elements.forEach(element => element.addEventListener("mousemove", handleUpdate));
+
+    function handleUpdate() {
+        let suffix = this.dataset.sizing || "";
+        document.documentElement.style.setProperty(`--${this.id}`, `${this.value}${suffix}`);
+    }
+
   </script>
 
 </body>
